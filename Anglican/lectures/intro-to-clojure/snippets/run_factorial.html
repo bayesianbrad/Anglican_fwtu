@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+<head>
+  <title></title>
+  <meta http-equiv="content-type" content="text/html; charset=None">
+  <link rel="stylesheet" href="../../../scripts/anglican.css" type="text/css">
+</head>
+<body>
+<div class="highlight"><pre style="font-family: Consolas; font-size: 26px; line-height: 110%"><span></span><span class="c1"># get source code for this tutorial</span>
+git clone git@bitbucket.org:probprog/ppaml-summer-school-2016.git
+<span class="nb">cd</span> ppaml-summer-school-2016/lectures/
+<span class="nb">cd</span> intro-to-functional-programming/examples/ 
+
+<span class="c1"># option 1: build uberjar and run via java</span>
+lein uberjar
+java -cp target/uberjar/examples-0.1.0-SNAPSHOT.jar <span class="se">\ </span>
+	examples.factorial <span class="m">1</span> <span class="m">2</span> <span class="m">5</span> 20
+
+<span class="c1"># option 2: run using leiningen</span>
+lein run -m examples.factorial <span class="m">1</span> <span class="m">2</span> <span class="m">5</span> 20
+
+<span class="c1"># =&gt; the factorial of 1 is 1</span>
+<span class="c1"># =&gt; the factorial of 2 is 2</span>
+<span class="c1"># =&gt; the factorial of 5 is 120</span>
+<span class="c1"># =&gt; the factorial of 20 is 2432902008176640000</span>
+</pre></div>
+
+</body>
+

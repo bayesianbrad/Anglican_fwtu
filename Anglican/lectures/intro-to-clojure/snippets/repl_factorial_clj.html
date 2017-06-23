@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+<head>
+  <title></title>
+  <meta http-equiv="content-type" content="text/html; charset=None">
+  <link rel="stylesheet" href="../../../scripts/anglican.css" type="text/css">
+</head>
+<body>
+<div class="highlight"><pre style="font-family: Consolas; font-size: 26px; line-height: 110%"><span></span><span class="nv">examples.core=&gt;</span> <span class="p">(</span><span class="nb">require </span><span class="ss">&#39;examples.factorial</span><span class="p">)</span>
+<span class="c1">;; =&gt; nil</span>
+
+<span class="nv">examples.core=&gt;</span> <span class="p">(</span><span class="nb">in-ns </span><span class="ss">&#39;examples.factorial</span><span class="p">)</span>
+<span class="c1">;; =&gt; #object[clojure.lang.Namespace 0x42cd2abe &quot;examples.factorial&quot;]</span>
+
+<span class="nv">examples.factorial=&gt;</span> <span class="p">(</span><span class="nf">-main</span> <span class="s">&quot;1&quot;</span> <span class="s">&quot;2&quot;</span> <span class="s">&quot;5&quot;</span> <span class="s">&quot;20&quot;</span><span class="p">)</span>
+<span class="c1">;; =&gt; the factorial of 1 is 1</span>
+<span class="c1">;; =&gt; the factorial of 2 is 2</span>
+<span class="c1">;; =&gt; the factorial of 5 is 120</span>
+<span class="c1">;; =&gt; the factorial of 20 is 2432902008176640000</span>
+<span class="c1">;; =&gt; nil</span>
+</pre></div>
+
+</body>
+

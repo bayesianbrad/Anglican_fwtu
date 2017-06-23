@@ -1,0 +1,130 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+<head>
+  <title></title>
+  <meta http-equiv="content-type" content="text/html; charset=None">
+  <style type="text/css">
+td.linenos { background-color: #f0f0f0; padding-right: 10px; }
+span.lineno { background-color: #f0f0f0; padding: 0 5px 0 5px; }
+pre { line-height: 125%; }
+body .hll { background-color: #ffffcc }
+body  { background: #ffffff; }
+body .c { color: #666666; font-style: italic } /* Comment */
+body .err { color: #7700bb } /* Error */
+body .k { color: #990000 } /* Keyword */
+body .o { color: #009988 } /* Operator */
+body .ch { color: #666666; font-style: italic } /* Comment.Hashbang */
+body .cm { color: #666666; font-style: italic } /* Comment.Multiline */
+body .cp { color: #666666; font-style: italic } /* Comment.Preproc */
+body .cpf { color: #666666; font-style: italic } /* Comment.PreprocFile */
+body .c1 { color: #666666; font-style: italic } /* Comment.Single */
+body .cs { color: #666666; font-style: italic } /* Comment.Special */
+body .kc { color: #990000 } /* Keyword.Constant */
+body .kd { color: #7700bb } /* Keyword.Declaration */
+body .kn { color: #990000 } /* Keyword.Namespace */
+body .kp { color: #990000 } /* Keyword.Pseudo */
+body .kr { color: #0055bb } /* Keyword.Reserved */
+body .kt { color: #990000 } /* Keyword.Type */
+body .s { color: #aa7700 } /* Literal.String */
+body .nb { color: #009988 } /* Name.Builtin */
+body .ow { color: #009988 } /* Operator.Word */
+body .sb { color: #aa7700 } /* Literal.String.Backtick */
+body .sc { color: #aa7700 } /* Literal.String.Char */
+body .sd { color: #aa7700 } /* Literal.String.Doc */
+body .s2 { color: #aa7700 } /* Literal.String.Double */
+body .se { color: #aa7700 } /* Literal.String.Escape */
+body .sh { color: #aa7700 } /* Literal.String.Heredoc */
+body .si { color: #aa7700 } /* Literal.String.Interpol */
+body .sx { color: #aa7700 } /* Literal.String.Other */
+body .sr { color: #aa7700 } /* Literal.String.Regex */
+body .s1 { color: #aa7700 } /* Literal.String.Single */
+body .ss { color: #aa7700 } /* Literal.String.Symbol */
+body .bp { color: #009988 } /* Name.Builtin.Pseudo */
+
+  </style>
+</head>
+<body>
+<h2></h2>
+
+<div class="highlight"><pre style="font-family: Consolas; font-size: 26px; line-height: 110%"><span></span><span class="p">(</span><span class="k">query </span><span class="p">[</span><span class="nv">outcome</span><span class="p">]</span>
+ <span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">theta</span> <span class="p">(</span><span class="kr">sample </span><span class="p">(</span><span class="nb">beta </span><span class="mi">1</span> <span class="mi">1</span><span class="p">))]</span>
+  <span class="p">(</span><span class="kr">observe </span><span class="p">(</span><span class="nb">flip </span><span class="nv">theta</span><span class="p">)</span> <span class="nv">outcome</span><span class="p">)</span>
+  <span class="nv">theta</span><span class="p">))</span>
+
+<span class="p">(</span><span class="k">fn </span><span class="nv">one-flip</span> <span class="p">[</span><span class="nv">outcome</span> <span class="nv">state</span> <span class="nv">cont</span><span class="p">]</span>
+ <span class="p">(</span><span class="kr">sample </span><span class="p">(</span><span class="nb">beta </span><span class="mi">1</span> <span class="mi">1</span><span class="p">)</span> 
+  <span class="nv">state</span> 
+  <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">theta</span> <span class="nv">state</span><span class="p">]</span> 
+   <span class="p">(</span><span class="kr">observe </span><span class="p">(</span><span class="nb">flip </span><span class="nv">theta</span><span class="p">)</span> <span class="nv">outcome</span>
+    <span class="nv">state</span>
+    <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">_</span> <span class="nv">state</span><span class="p">]</span>
+     <span class="p">(</span><span class="nf">cont</span> <span class="nv">nil</span>
+      <span class="p">(</span><span class="nb">add-predict </span>
+       <span class="nv">state</span> <span class="nv">bias</span><span class="p">)))))))</span>
+
+<span class="p">(</span><span class="kd">defn </span><span class="nv">importance-one-flip</span> 
+  <span class="p">[</span><span class="nv">outcome</span><span class="p">]</span>
+  <span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">theta</span> <span class="p">(</span><span class="nb">sample* </span><span class="p">(</span><span class="nb">beta </span><span class="mi">1</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="nv">w</span> <span class="p">(</span><span class="nb">observe* </span><span class="p">(</span><span class="nb">flip </span><span class="nv">theta</span><span class="p">)</span> 
+                    <span class="nv">outcome</span><span class="p">)]</span>
+    <span class="p">{</span><span class="ss">:log-weight</span> <span class="nv">w</span> 
+     <span class="ss">:result</span> <span class="nv">theta</span> 
+     <span class="ss">:predicts</span> <span class="p">[]}))</span>
+
+<span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">outcome</span> <span class="nv">$state</span><span class="p">]</span>
+ <span class="p">(</span><span class="kr">-&gt;sample </span><span class="ss">&#39;S24726</span>
+  <span class="p">(</span><span class="nb">beta </span><span class="mi">1</span> <span class="mi">1</span><span class="p">)</span>
+  <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">theta</span> <span class="nv">$state</span><span class="p">]</span>
+   <span class="p">(</span><span class="kr">-&gt;observe </span><span class="ss">&#39;O24724</span>
+    <span class="p">(</span><span class="nb">flip </span><span class="nv">theta</span><span class="p">)</span> 
+    <span class="nv">outcome</span>
+    <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">_</span> <span class="nv">$state</span><span class="p">]</span> 
+     <span class="p">(</span><span class="kr">-&gt;result </span><span class="nv">theta</span> <span class="nv">$state</span><span class="p">))</span>
+    <span class="nv">$state</span><span class="p">))</span>
+  <span class="nv">$state</span><span class="p">))</span>
+
+<span class="p">{</span><span class="ss">:id</span> <span class="ss">&#39;S24726</span>
+ <span class="ss">:dist</span> <span class="p">(</span><span class="nb">beta </span><span class="mi">1</span> <span class="mi">1</span><span class="p">)</span>
+ <span class="ss">:cont</span> <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">theta</span> <span class="nv">$state</span><span class="p">]</span>
+         <span class="nv">...</span><span class="p">)</span>
+ <span class="ss">:state</span> <span class="nv">$state</span><span class="p">}</span>
+
+<span class="p">{</span><span class="ss">:id</span> <span class="ss">&#39;O24724</span>
+ <span class="ss">:dist</span> <span class="p">(</span><span class="nb">flip </span><span class="nv">theta</span><span class="p">)</span> 
+ <span class="ss">:value</span> <span class="nv">outcome</span>
+ <span class="ss">:cont</span> <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="nv">_</span> <span class="nv">$state</span><span class="p">]</span> 
+         <span class="p">(</span><span class="kr">-&gt;result </span><span class="nv">theta</span> <span class="nv">$state</span><span class="p">))</span>
+ <span class="ss">:state</span> <span class="nv">$state</span><span class="p">}</span>
+
+<span class="p">{</span><span class="ss">:result</span> <span class="nv">theta</span> 
+ <span class="ss">:state</span> <span class="nv">$state</span><span class="p">}</span>
+
+<span class="p">{</span><span class="ss">:result</span> <span class="nv">theta</span>
+ <span class="ss">:log-weight</span> 
+   <span class="p">(</span><span class="ss">:log-weight</span> <span class="nv">$state</span><span class="p">)</span>
+ <span class="ss">:predicts</span> 
+   <span class="p">(</span><span class="ss">:predicts</span> <span class="nv">$state</span><span class="p">)}</span>
+
+<span class="p">(</span><span class="nb">use </span><span class="o">&#39;</span><span class="p">[</span><span class="nv">anglican</span> <span class="nv">emit</span> <span class="nv">runtime</span> <span class="nv">inference</span> <span class="nv">state</span><span class="p">])</span>
+<span class="p">(</span><span class="nb">exec </span><span class="ss">:importance</span> <span class="nv">one-flip</span> <span class="p">[</span><span class="nv">true</span><span class="p">]</span> <span class="nv">initial-state</span><span class="p">)</span>
+<span class="c1">; =&gt;</span>
+<span class="o">#</span><span class="nv">anglican.trap.sample</span><span class="p">{</span><span class="ss">:id</span> <span class="nv">S23882</span>, 
+                      <span class="ss">:dist</span> <span class="p">(</span><span class="nf">anglican.runtime/beta</span> <span class="mi">1</span> <span class="mi">1</span><span class="p">)</span>, 
+                      <span class="ss">:cont</span> <span class="o">#</span><span class="nv">function</span><span class="p">[</span><span class="nv">test/fn--23883$query23877--23885$var23881--23887</span><span class="p">]</span>, 
+                      <span class="ss">:state</span> <span class="p">{</span><span class="ss">:log-weight</span> <span class="mf">0.0</span>, 
+                              <span class="ss">:predicts</span> <span class="p">[]</span>, 
+                              <span class="ss">:result</span> <span class="nv">nil</span>, 
+                              <span class="ss">:anglican.state/mem</span> <span class="p">{}</span>, 
+                              <span class="ss">:anglican.state/store</span> <span class="nv">nil</span><span class="p">}}</span>  
+
+<span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">x</span> <span class="p">(</span><span class="nb">sample* </span><span class="nv">dist</span><span class="p">)]</span>
+  <span class="p">(</span><span class="nf">cont</span> <span class="nv">x</span> <span class="nv">$state</span><span class="p">))</span> 
+
+<span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">w</span> <span class="p">(</span><span class="nb">observe* </span><span class="nv">dist</span> <span class="nv">value</span><span class="p">)]</span>
+  <span class="p">(</span><span class="nf">cont</span> <span class="nv">nil</span> <span class="p">(</span><span class="nb">add-log-weight </span><span class="nv">$state</span> <span class="nv">w</span><span class="p">)))</span>
+</pre></div>
+</body>
+</html>
+

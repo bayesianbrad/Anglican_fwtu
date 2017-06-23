@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+<head>
+  <title></title>
+  <meta http-equiv="content-type" content="text/html; charset=None">
+  <link rel="stylesheet" href="../../../scripts/anglican.css" type="text/css">
+</head>
+<body>
+<div class="highlight"><pre style="font-family: Consolas; font-size: 26px; line-height: 110%"><span></span><span class="p">(</span><span class="kd">defmacro </span><span class="nv">unless</span>
+  <span class="s">&quot;Inverted &#39;if&quot;</span>
+  <span class="p">[</span><span class="nv">pred</span> <span class="nv">then</span> <span class="nv">else</span><span class="p">]</span>
+  <span class="p">(</span><span class="nb">list </span><span class="ss">&#39;if</span> <span class="nv">pred</span> <span class="nv">else</span> <span class="nv">then</span><span class="p">))</span>
+
+<span class="p">(</span><span class="kd">def </span><span class="nv">flavor</span> <span class="ss">:tasty</span><span class="p">)</span>
+
+<span class="p">(</span><span class="nf">unless</span> <span class="p">(</span><span class="nb">= </span><span class="nv">flavor</span> <span class="ss">:tasty</span><span class="p">)</span>
+  <span class="ss">:yuk</span>
+  <span class="ss">:yum</span><span class="p">))</span>
+
+<span class="c1">; ~&gt;</span>
+
+<span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nb">= </span><span class="nv">flavor</span> <span class="ss">:tasty</span><span class="p">)</span> 
+  <span class="ss">:yum</span> 
+  <span class="ss">:yuk</span><span class="p">)</span>
+
+<span class="c1">; =&gt; </span>
+
+<span class="ss">:yum</span> 
+
+<span class="p">(</span><span class="nf">macroexpand</span>
+  <span class="o">&#39;</span><span class="p">(</span><span class="nf">unless</span> <span class="p">(</span><span class="nf">tasty?</span> <span class="nv">food</span><span class="p">)</span>
+     <span class="ss">:yuk</span>
+     <span class="ss">:yum</span><span class="p">))</span>
+<span class="c1">; =&gt; (if (tasty? food)</span>
+<span class="c1">;      :yum</span>
+<span class="c1">;      :yuk))</span>
+
+<span class="p">(</span><span class="kd">defmacro </span><span class="nv">dbg</span> 
+  <span class="s">&quot;Prints an expression and</span>
+<span class="s">  its value for debugging.&quot;</span>
+  <span class="p">[</span><span class="nv">expr</span><span class="p">]</span>
+  <span class="p">(</span><span class="nb">list </span><span class="ss">&#39;do</span> 
+    <span class="p">(</span><span class="nb">list </span><span class="ss">&#39;println</span> 
+      <span class="s">&quot;[dbg]&quot;</span> 
+      <span class="p">(</span><span class="nb">list </span><span class="ss">&#39;quote</span> <span class="nv">expr</span><span class="p">)</span> 
+      <span class="nv">expr</span><span class="p">)</span>
+    <span class="nv">expr</span><span class="p">))</span>
+
+<span class="p">(</span><span class="nf">dbg</span> <span class="p">(</span><span class="nb">+ </span><span class="mi">1</span> <span class="mi">2</span><span class="p">))</span>
+<span class="c1">; =&gt; [dbg] (+ 1 2) 3</span>
+<span class="c1">; =&gt; 3</span>
+
+<span class="p">(</span><span class="nb">macroexpand </span><span class="o">&#39;</span><span class="p">(</span><span class="nf">dbg</span> <span class="p">(</span><span class="nb">+ </span><span class="mi">1</span> <span class="mi">2</span><span class="p">))</span>
+<span class="c1">; =&gt; (do </span>
+<span class="c1">;      (println &quot;[dbg]&quot; </span>
+<span class="c1">;               (quote (+ 1 2)) </span>
+<span class="c1">;               (+ 1 2)) </span>
+<span class="c1">;      (+ 1 2))</span>
+
+<span class="p">(</span><span class="kd">defmacro </span><span class="nv">dbg</span> 
+  <span class="s">&quot;Prints an expression and</span>
+<span class="s">  its value for debugging.&quot;</span>
+  <span class="p">[</span><span class="nv">expr</span><span class="p">]</span>
+  <span class="o">`</span><span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">value#</span> <span class="o">~</span><span class="nv">expr</span><span class="p">]</span> 
+    <span class="p">(</span><span class="nb">println </span><span class="s">&quot;[dbg]&quot;</span> <span class="o">&#39;~</span><span class="nv">expr</span> <span class="nv">value#</span><span class="p">)</span> 
+    <span class="nv">value#</span><span class="p">))</span>
+
+<span class="p">(</span><span class="nf">dbg</span> <span class="p">(</span><span class="nb">+ </span><span class="mi">1</span> <span class="mi">2</span><span class="p">))</span>
+<span class="c1">; =&gt; [dbg] (+ 1 2) 3</span>
+<span class="c1">; =&gt; 3</span>
+
+<span class="p">(</span><span class="nb">macroexpand </span><span class="o">&#39;</span><span class="p">(</span><span class="nf">dbg</span> <span class="p">(</span><span class="nb">+ </span><span class="mi">1</span> <span class="mi">2</span><span class="p">))</span>
+<span class="c1">; =&gt; (let* [value__23707__auto__ (+ 1 2)] </span>
+<span class="c1">;      (clojure.core/println </span>
+<span class="c1">;        &quot;[dbg]&quot; </span>
+<span class="c1">;        (quote (+ 1 2)) </span>
+<span class="c1">;        value__23707__auto__) </span>
+<span class="c1">;      value__23707__auto__)</span>
+</pre></div>
+
+</body>
+
