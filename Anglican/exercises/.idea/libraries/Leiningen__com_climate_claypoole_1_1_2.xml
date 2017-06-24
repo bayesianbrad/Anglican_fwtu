@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Leiningen: com.climate/claypoole:1.1.2">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/climate/claypoole/1.1.2/claypoole-1.1.2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -35,9 +35,16 @@
   (loop [result 0.0
          values values]
     (if (seq values)
-      (recur ...complete-this...
-             ...complete-this...)
+      (recur (+ result (first values)) 
+             (rest values))
       result)))
+;; @@
+;; =>
+;;; {"type":"html","content":"<span class='clj-var'>#&#x27;user/sum</span>","value":"#'user/sum"}
+;; <=
+
+;; @@
+
 ;; @@
 
 ;; **
@@ -45,9 +52,12 @@
 ;; **
 
 ;; @@
-(sum [1 2 3])
+(sum [1 2 3 5 2 42 21])
 ; => 6.0
 ;; @@
+;; =>
+;;; {"type":"html","content":"<span class='clj-double'>76.0</span>","value":"76.0"}
+;; <=
 
 ;; **
 ;;; Note that the sum function returns a double, whereas the inputs are longs. Can you explain why this happens?
@@ -63,12 +73,15 @@
          values values]
     (if (seq values)
       (if result
-        (recur ...complete-this...
-               ...complete-this...)
-        (recur ...complete-this...
-               ...complete-this...))
+        (recur (+ result (first values))
+              (rest values))
+        (recur (first values)
+               (rest values)))
       result)))
 ;; @@
+;; =>
+;;; {"type":"html","content":"<span class='clj-var'>#&#x27;user/sum</span>","value":"#'user/sum"}
+;; <=
 
 ;; **
 ;;; Now test that the sum function preserves input types
@@ -82,6 +95,9 @@
 (sum [1 2 3])
 ; => 6
 ;; @@
+;; =>
+;;; {"type":"html","content":"<span class='clj-long'>6</span>","value":"6"}
+;; <=
 
 ;; **
 ;;; Rewrite the `sum` function using the `reduce` command
@@ -89,8 +105,11 @@
 
 ;; @@
 (defn sum [values]
-  ...complete-this...)
+  (reduce + values))
 ;; @@
+;; =>
+;;; {"type":"html","content":"<span class='clj-var'>#&#x27;user/sum</span>","value":"#'user/sum"}
+;; <=
 
 ;; @@
 (sum [1.0 2.0 3.0])
@@ -100,6 +119,9 @@
 (sum [1 2 3])
 ; => 6
 ;; @@
+;; =>
+;;; {"type":"html","content":"<span class='clj-long'>6</span>","value":"6"}
+;; <=
 
 ;; **
 ;;; Now let's write a cumulative sum function that maps a collection of numbers `[1 2 3 4]` onto the partial sums `[1 3 6 10]`

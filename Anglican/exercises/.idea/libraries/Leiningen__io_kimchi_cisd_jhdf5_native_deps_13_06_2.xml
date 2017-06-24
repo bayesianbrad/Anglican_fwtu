@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Leiningen: io.kimchi/cisd-jhdf5-native-deps:13.06.2">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/io/kimchi/cisd-jhdf5-native-deps/13.06.2/cisd-jhdf5-native-deps-13.06.2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

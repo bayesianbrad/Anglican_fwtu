@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Leiningen: io.kimchi/cisd-base:13.06.2">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/io/kimchi/cisd-base/13.06.2/cisd-base-13.06.2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

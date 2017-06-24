@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Leiningen: net.polyc0l0r/clj-hdf5:0.2.2-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/net/polyc0l0r/clj-hdf5/0.2.2-SNAPSHOT/clj-hdf5-0.2.2-SNAPSHOT.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
